@@ -2,7 +2,7 @@
 
 class Database
 {
-  public function dbConnect()
+  public static function dbConnect()
   {
     $dbhost = getConfig('DB_HOST');
     $dbusername = getConfig('DB_USERNAME');
@@ -17,3 +17,4 @@ class Database
     }
   }
 }
+
