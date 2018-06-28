@@ -1,9 +1,15 @@
 <?php
-require("../app/Utils/util.php");
-require_once("../app/Utils/Database.php");
-require("../app/Controllers/CommentController.php");
-require("../app/Controllers/MainController.php");
-require("../app/Controllers/UserController.php");
+
+// Composer Autoload for the project namespace
+require __DIR__.'/../vendor/autoload.php';
+
+// use P4blog\Utils\util;
+use P4blog\Utils\Database;
+use P4blog\Controllers\CommentController;
+use P4blog\Controllers\MainController;
+use P4blog\Controllers\UserController;
+
+session_start();
 
 // Test de connexion à la Database
 $db = new Database();
@@ -17,7 +23,7 @@ $currentURL = isset($_GET['_url']) ? $_GET['_url'] : '';
 switch ($currentURL) {
   case '':
   $controller = new MainController();
-  $controller->showHomeGuest();
+  $controller->showHome();
     break;
 
   //routes dynamiques avec get
@@ -35,20 +41,40 @@ switch ($currentURL) {
   $controller->login();
     break;
 
-  case '/signin':
+  case '/login/submit':
+  $controller = new UserController();
+  $controller->loginSubmit();
+    break;
+
+  case '/signup':
   $controller = new UserController();
   $controller->signin();
     break;
 
-  case '/admin':
+  case '/signup/submit':
   $controller = new UserController();
-  $controller->showHomeAdmin();
+  $controller->signinSubmit();
     break;
 
-  case '/user':
+  // case '/admin':
+  // $controller = new UserController();
+  // $controller->showHomeAdmin();
+  //   break;
+
+  case '/admin/validate':
   $controller = new UserController();
-  $controller->showHomeUser();
+  $controller->validateComment();
     break;
+
+  case '/admin/delete':
+  $controller = new UserController();
+  $controller->deleteComment();
+    break;
+
+  // case '/user':
+  // $controller = new UserController();
+  // $controller->showHomeUser();
+  //   break;
 
   //routes dynamiques avec get
   case '/admin/post/get':
@@ -59,7 +85,7 @@ switch ($currentURL) {
       echo 'Erreur 404';
   }
     break;
-    
+
   //routes dynamiques avec get
   case '/user/post/get':
   if (isset($_GET['id'])) {
@@ -73,9 +99,21 @@ switch ($currentURL) {
     echo 'Erreur 404';
     break;
 
+/* FAIRE LIENS BOUTON EDITER PAGE POSTADMIN ET BOUTONS SIGNALER SUR POSTADMIN ET POSTUSER*/
+
   case '/admin/post/create':
   $controller = new UserController();
   $controller->createPost();
+    break;
+
+  case '/admin/post/create/save':
+  $controller = new UserController();
+  $controller->savePost();
+    break;
+
+  case '/admin/post/create/publish':
+  $controller = new UserController();
+  $controller->publishPost();
     break;
 
   case '/admin/post/edit':
@@ -83,7 +121,17 @@ switch ($currentURL) {
   $controller->editPost();
     break;
 
-  case '/post/comment':
+  case '/admin/post/edit/archieve':
+  $controller = new UserController();
+  $controller->archievePost();
+    break;
+
+  case '/admin/post/edit/update':
+  $controller = new UserController();
+  $controller->updatePost();
+    break;
+
+  case '/post/comment/add':
   $controller = new CommentController();
   $controller->addComment();
     break;
@@ -93,5 +141,8 @@ switch ($currentURL) {
   $controller->reportComment();
     break;
 
-  
+  case '/disconnection':
+  $controller = new UserController();
+  $controller->disconnect();
+    break;
 }
