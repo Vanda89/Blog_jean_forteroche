@@ -2,7 +2,7 @@
   <section class="text-editor-container container d-flex flex-column">
     <div class="text-editor-row row bg-dark mb-4 pb-0">
       <form method="post" class="text-editor-form container px-1">
-        <textarea id="title-post-editor">Titre...</textarea>
+        <input id="title-post-editor">Titre...</input>
       </form>
 
       <form method="post" class="text-editor-form container px-1">
