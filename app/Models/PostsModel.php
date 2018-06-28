@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__.'/../Utils/Database.php';
+namespace P4blog\Models;
+
+use P4blog\Utils\Database;
+use PDO;
 
 class PostsModel
 {
@@ -11,33 +14,12 @@ class PostsModel
     private $update_date;
     private $User_id_user;
 
-    // Méthode permettant de retourner un objet ListModel pour l'id passé en paramètre/argument
     public static function findAll()
     {
-        $sql = '
-            SELECT *
-            FROM posts
-        ';
-        // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect();
-
-        // On exécute la requête
-        $pdoStatement = $pdo->query($sql);
-
-        // Récupération des résultats sous forme de tableau d'objet PostsModel
-        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'PostsModel');
-
-        // On retourne les résultats
-        return $results;
-    }
-
-    // Méthode permettant de retourner un objet PostModel pour l'id passé en paramètre/argument
-    public static function find($idPost)
-    {
         $sql = "
-            SELECT *
+            SELECT title, post_content, status, DATE_FORMAT(creation_date, '%d/%m/%Y') AS creation_date, update_date
             FROM posts
-            WHERE id_post = {$idPost}
+            ORDER BY creation_date DESC
         ";
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
@@ -45,16 +27,31 @@ class PostsModel
         // On exécute la requête
         $pdoStatement = $pdo->query($sql);
 
-        // Récupération du résultat sous forme d'objet PostsModel
-        $result = $pdoStatement->fetchObject('PostModel');
+        // Récupération des résultats sous forme de tableau d'objet PostsModel
+        $results = $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
 
-        // On retourne le résultat
-        return $result;
+        // On retourne les résultats
+        return $results;
     }
 
-    // Méthode permettant d'ajouter une ligne dans la table lists
-    // en se basant sur les valeurs des propriétés de l'objet courant
-    // Rappel, l'objet courant = $this
+    public static function find($idPost)
+    {
+        $sql = "
+            SELECT title, post_content, status, DATE_FORMAT(creation_date, '%d/%m/%Y') AS creation_date, update_date
+            FROM posts
+            WHERE id_post = (:idPost)
+        ";
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchObject(self::class);
+    }
+
     public function add()
     {
         $sql = '
@@ -73,15 +70,12 @@ class PostsModel
         $pdoStatement->execute();
     }
 
-    // Méthode permettant de modifier une ligne dans la table lists
-    // en se basant sur les valeurs des propriétés de l'objet courant
-    // Rappel, l'objet courant = $this
     public function update()
     {
         $sql = '
             UPDATE posts
             SET title = :newTitle, post_content = :newPostContent, status = :newStatus, update_date = NOW()
-            WHERE id_post = (:id_post)
+            WHERE id_post = (:idPost)
         ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect()($sql);
@@ -91,19 +85,16 @@ class PostsModel
         $pdoStatement->bindValue(':newTitle', $this->title, PDO::PARAM_STR);
         $pdoStatement->bindValue(':newPostContent', $this->post_content, PDO::PARAM_STR);
         $pdoStatement->bindValue(':newStatus', $this->status, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':id_post', $this->id_post, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':idPost', $this->id_post, PDO::PARAM_INT);
         $pdoStatement->execute();
     }
 
-    // Méthode permettant de supprimer une ligne dans la table lists
-    // en se basant sur la propriété "id" de l'objet courant
-    // Rappel, l'objet courant = $this
     public function archieve()
     {
         $sql = '
             UPDATE posts
             SET status = :newStatus
-            WHERE id_post = (:id_post)
+            WHERE id_post = (:idPost)
         ';
 
         // On récupère la connextion PDO à la DB
@@ -112,7 +103,7 @@ class PostsModel
         $pdoStatement = $pdo->prepare($sql);
         // Association des valeurs aux champs de la bdd et paramètrage du retour
         $pdoStatement->bindValue(':newStatus', $this->status, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':id_post', $this->id_post, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':idPost', $this->id_post, PDO::PARAM_INT);
         $pdoStatement->execute();
     }
 
@@ -179,7 +170,7 @@ class PostsModel
     /**
      * Get the value of creation_date.
      */
-    public function getCreationDate(): int
+    public function getCreationDate(): string
     {
         return $this->creation_date;
     }
@@ -189,7 +180,7 @@ class PostsModel
      *
      * @return self
      */
-    public function setCreationDate($creation_date): int
+    public function setCreationDate(string $creation_date)
     {
         $this->creation_date = $creation_date;
 

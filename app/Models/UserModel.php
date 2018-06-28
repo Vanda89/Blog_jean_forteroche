@@ -1,5 +1,9 @@
 <?php
 
+namespace P4blog\Models;
+
+use PDO;
+
 class UserModel
 {
     private $name;
@@ -28,22 +32,20 @@ class UserModel
 
     public static function find($idUser)
     {
-        $sql = "
+        $sql = '
             SELECT *
             FROM user
-            WHERE id_user = {$idUser}
-        ";
+            WHERE id_user = (:idUser)
+        ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idUser', $idUser, PDO::PARAM_INT);
+        $pdoStatement->execute();
 
-        // On exécute la requête
-        $pdoStatement = $pdo->query($sql);
-
-        // Récupération du résultat sous forme d'objet UserModel
-        $result = $pdoStatement->fetchObject('UserModel');
-
-        // On retourne le résultat
-        return $result;
+        return $pdoStatement->fetchObject(self::class);
     }
 
     public function add()

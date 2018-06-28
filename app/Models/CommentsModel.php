@@ -1,5 +1,10 @@
 <?php
 
+namespace P4blog\Models;
+
+use P4blog\Utils\Database;
+use PDO;
+
 class CommentsModel
 {
     private $author;
@@ -11,12 +16,12 @@ class CommentsModel
     private $Posts_id_post;
     private $User_id_user;
 
-    // Méthode permettant de retourner un objet ListModel pour l'id passé en paramètre/argument
     public static function findAll()
     {
         $sql = '
             SELECT *
             FROM comments
+            ORDER BY comment_date DESC
         ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
@@ -31,30 +36,24 @@ class CommentsModel
         return $results;
     }
 
-    // Méthode permettant de retourner un objet PostModel pour l'id passé en paramètre/argument
     public static function find($idComment)
     {
-        $sql = "
+        $sql = '
             SELECT *
             FROM comments
-            WHERE id_comment = {$idComment}
-        ";
+            WHERE id_comment = (:idComment)
+        ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idComment', $idComment, PDO::PARAM_INT);
+        $pdoStatement->execute();
 
-        // On exécute la requête
-        $pdoStatement = $pdo->query($sql);
-
-        // Récupération du résultat sous forme d'objet CommentsModel
-        $result = $pdoStatement->fetchObject('CommentsModel');
-
-        // On retourne le résultat
-        return $result;
+        return $pdoStatement->fetchObject(self::class);
     }
 
-    // Méthode permettant d'ajouter une ligne dans la table lists
-    // en se basant sur les valeurs des propriétés de l'objet courant
-    // Rappel, l'objet courant = $this
     public function add()
     {
         $sql = '
@@ -74,9 +73,6 @@ class CommentsModel
         $pdoStatement->execute();
     }
 
-    // Méthode permettant de supprimer une ligne dans la table lists
-    // en se basant sur la propriété "id" de l'objet courant
-    // Rappel, l'objet courant = $this
     public function reported()
     {
         $sql = '
@@ -86,13 +82,13 @@ class CommentsModel
         ';
 
         // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect()($sql);
+        $pdo = Database::dbConnect();
         // On prépare une requête à l'exécution et retourne un objet
         $pdoStatement = $pdo->prepare($sql);
         // Association des valeurs aux champs de la bdd et paramètrage du retour
         $pdoStatement->bindValue(':newStatus', $this->status, PDO::PARAM_INT);
         $pdoStatement->bindValue(':reported', $this->comment_reported, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':idComment', $this->id_post, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':idComment', $this->id_comment, PDO::PARAM_INT);
         $pdoStatement->execute();
     }
 
@@ -105,7 +101,7 @@ class CommentsModel
         ';
 
         // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect()($sql);
+        $pdo = Database::dbConnect();
         // On prépare une requête à l'exécution et retourne un objet
         $pdoStatement = $pdo->prepare($sql);
         // Association des valeurs aux champs de la bdd et paramètrage du retour
@@ -124,13 +120,52 @@ class CommentsModel
         ';
 
         // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect()($sql);
+        $pdo = Database::dbConnect();
         // On prépare une requête à l'exécution et retourne un objet
         $pdoStatement = $pdo->prepare($sql);
         // Association des valeurs aux champs de la bdd et paramètrage du retour
         $pdoStatement->bindValue(':newStatus', $this->status, PDO::PARAM_INT);
         $pdoStatement->bindValue(':idComment', $this->id_comment, PDO::PARAM_INT);
         $pdoStatement->execute();
+    }
+
+    public static function findCommentsByPostId($idComment)
+    {
+        $sql = '
+            SELECT *
+            FROM comments
+            INNER JOIN posts 
+            ON id_comment = Posts_id_post         
+            WHERE id_comment = :idComment
+            ORDER BY comment_date DESC
+        ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idComment', $idComment, PDO::PARAM_INT);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    public static function findAllByReport()
+    {
+        $sql = '
+            SELECT *
+            FROM comments                
+            WHERE comment_reported = 1
+            ORDER BY comment_date DESC
+        ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
     // GETTERS AND SETTERS
@@ -148,7 +183,7 @@ class CommentsModel
      *
      * @return self
      */
-    public function setAuthor($author): string
+    public function setAuthor(string $author)
     {
         $this->author = $author;
 
@@ -198,7 +233,7 @@ class CommentsModel
     /**
      * Get the value of comment_date.
      */
-    public function getCommentDate(): int
+    public function getCommentDate(): string
     {
         return $this->comment_date;
     }
@@ -208,7 +243,7 @@ class CommentsModel
      *
      * @return self
      */
-    public function setCommentDate($comment_date): int
+    public function setCommentDate(string $comment_date)
     {
         $this->comment_date = $comment_date;
 
@@ -238,7 +273,7 @@ class CommentsModel
     /**
      * Get the value of update_date.
      */
-    public function getUpdateDate(): int
+    public function getUpdateDate(): string
     {
         return $this->update_date;
     }
@@ -248,7 +283,7 @@ class CommentsModel
      *
      * @return self
      */
-    public function setUpdateDate($update_date): int
+    public function setUpdateDate(string $update_date)
     {
         $this->update_date = $update_date;
 
