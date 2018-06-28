@@ -1,15 +1,18 @@
 <?php
-require_once(__DIR__.'/./CoreController.php');
+
+namespace P4blog\Controllers;
+
+// use P4blog\Models\CommentsModel;
 
 class CommentController extends CoreController
 {
     public function addComment()
     {
-        //TODO
+        var_dump($_POST);
     }
 
     public function reportComment()
     {
-        //TODO
+        var_dump($_POST);
     }
 }
