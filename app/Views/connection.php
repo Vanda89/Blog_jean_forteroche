@@ -3,15 +3,17 @@
     <header class="connection-form-container-header row d-flex justify-content-between mb-5 p-3">
       <h2 class="connection-form-container-title w-100 text-center">Formulaire de connexion</h2>
     </header>
+
     <div class="connection-form-row row mb-3">
-      <form action="" method="post" class="connection-form container d-flex flex-column justify-content-around align-items-center p-0">
+      <form action="" method="post" id="connectionForm" class="connection-form container d-flex flex-column justify-content-around align-items-center p-0">
         <h3 class="connection-form-title row mt-5"> Déjà inscrit ?</h3>
-        <div id="error" class="alert alert-danger" role="alert">
+        <div id="errors" class="alert alert-danger errors-hide" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <p id="existing-name">Identifiant ou mot de passe incorrect.</p>
-          <p id="empty">Tous les champs sont obligatoires.</p>
+          <!-- TODO CLASS CSS HIDE
+            <p id="existing-name">Identifiant ou mot de passe incorrect.</p>
+          <p id="empty">Tous les champs sont obligatoires.</p> -->
         </div>
         <div class="mt-5 mb-5 row">
           <label for="mail" class="mail"></label>

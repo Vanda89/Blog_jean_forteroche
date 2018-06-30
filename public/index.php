@@ -48,18 +48,13 @@ switch ($currentURL) {
 
   case '/signup':
   $controller = new UserController();
-  $controller->signin();
+  $controller->signup();
     break;
 
   case '/signup/submit':
   $controller = new UserController();
-  $controller->signinSubmit();
+  $controller->signupSubmit();
     break;
-
-  // case '/admin':
-  // $controller = new UserController();
-  // $controller->showHomeAdmin();
-  //   break;
 
   case '/admin/validate':
   $controller = new UserController();
@@ -69,34 +64,6 @@ switch ($currentURL) {
   case '/admin/delete':
   $controller = new UserController();
   $controller->deleteComment();
-    break;
-
-  // case '/user':
-  // $controller = new UserController();
-  // $controller->showHomeUser();
-  //   break;
-
-  //routes dynamiques avec get
-  case '/admin/post/get':
-  if (isset($_GET['id'])) {
-      $controller = new UserController();
-      $controller->showPostAdmin($_GET['id']);
-  } else {
-      echo 'Erreur 404';
-  }
-    break;
-
-  //routes dynamiques avec get
-  case '/user/post/get':
-  if (isset($_GET['id'])) {
-      $controller = new UserController();
-      $controller->showPostUser($_GET['id']);
-  } else {
-      echo 'Erreur 404';
-  }
-    break;
-  default:
-    echo 'Erreur 404';
     break;
 
 /* FAIRE LIENS BOUTON EDITER PAGE POSTADMIN ET BOUTONS SIGNALER SUR POSTADMIN ET POSTUSER*/

@@ -2,6 +2,7 @@
 
 namespace P4blog\Models;
 
+use P4blog\Utils\Database;
 use PDO;
 
 class UserModel
@@ -11,6 +12,9 @@ class UserModel
     private $password;
     private $is_admin;
 
+    /**
+     * findAll.
+     */
     public static function findAll()
     {
         $sql = '
@@ -30,6 +34,11 @@ class UserModel
         return $results;
     }
 
+    /**
+     * find.
+     *
+     * @param mixed $idUser
+     */
     public static function find($idUser)
     {
         $sql = '
@@ -48,6 +57,53 @@ class UserModel
         return $pdoStatement->fetchObject(self::class);
     }
 
+    /**
+     * findByMail.
+     *
+     * @param string $mail
+     */
+    public static function findByMail(string $mail)
+    {
+        $sql = '
+            SELECT *
+            FROM user
+            WHERE mail = :mail
+        ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindValue(':mail', $mail, PDO::PARAM_STR);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchObject(self::class);
+    }
+
+    /**
+     * findByName.
+     *
+     * @param string $name
+     */
+    public static function findByName(string $name)
+    {
+        $sql = '
+            SELECT *
+            FROM user
+            WHERE name = :name
+        ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindValue(':name', $name, PDO::PARAM_STR);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchObject(self::class);
+    }
+
+    /**
+     * add.
+     */
     public function add()
     {
         $sql = '
@@ -80,7 +136,7 @@ class UserModel
      *
      * @return self
      */
-    public function setIsAdmin(int $is_admin): int
+    public function setIsAdmin(int $is_admin)
     {
         $this->is_admin = $is_admin;
 
@@ -100,7 +156,7 @@ class UserModel
      *
      * @return self
      */
-    public function setName(int $name): string
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -120,7 +176,7 @@ class UserModel
      *
      * @return self
      */
-    public function setMail($mail): string
+    public function setMail($mail)
     {
         $this->mail = $mail;
 
@@ -140,7 +196,7 @@ class UserModel
      *
      * @return self
      */
-    public function setPassword($password): string
+    public function setPassword($password)
     {
         $this->password = $password;
 

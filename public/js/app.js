@@ -2,7 +2,7 @@ var app = {
 
   init: function () {
     console.log('init');
-    
+
     tinymce.init({
       selector: '#title-post-editor',
       theme: 'modern',
@@ -59,6 +59,45 @@ var app = {
         plugins: ['autosave', 'lists', 'autolink'],
         toolbar: ['undo', 'bold', 'italic', 'styleselect']
       }
+    });
+
+    $('#connectionForm').on('submit', {
+      url: "./login/submit"
+    }, app.submitForm);
+
+    $('#registrationForm').on('submit', {
+      url: "./signup/submit"
+    }, app.submitForm);
+
+
+
+  },
+
+  submitForm: function (evt) {
+    evt.preventDefault();
+    var $currentForm = $(this);
+    var formData = $currentForm.serialize();
+    $.ajax({
+      url: evt.data.url,
+      method: 'POST',
+      dataType: 'json',
+      data: formData
+    }).done(function (response) {
+      console.log(response['url']);
+      if (response['url'] != undefined) {
+        document.location.href = response['url']
+
+      } else {
+        var errors = "";
+        $('#errors').show();
+        $(response).each(function (index, element) {
+          errors += element + '<br>';
+        })
+        $('#errors').html(errors);
+      }
+
+    }).fail(function () {
+      alert('ajax failed');
     });
   },
 }

@@ -13,6 +13,9 @@ use P4blog\Utils\User;
 
 class MainController extends CoreController
 {
+    /**
+     * showHome.
+     */
     public function showHome()
     {
         $allPosts = PostsModel::findAll();
@@ -24,14 +27,19 @@ class MainController extends CoreController
         ];
 
         if (User::isConnected() === false) {
-            $this->show('Blog', 'homeGuest', $dataToViews);
+            $this->show('homeGuest', 'Blog', $dataToViews);
         } elseif (User::isAdmin() === true) {
-            $this->show('Tableau de bord', 'homeAdmin', $dataToViews);
+            $this->show('homeAdmin', 'Tableau de bord', $dataToViews);
         } else {
-            $this->show('Page d\'accueil - Blog de Jean Forteroche', 'homeUser', $dataToViews);
+            $this->show('homeUser', 'Page d\'accueil - Blog de Jean Forteroche', $dataToViews);
         }
     }
 
+    /**
+     * showPost.
+     *
+     * @param mixed $id
+     */
     public function showPost($id)
     {
         $post = PostsModel::find($id);
@@ -42,6 +50,12 @@ class MainController extends CoreController
             'comments' => $comments,
         ];
 
-        $this->show('Billet', 'postGuest', $dataToViews);
+        if (User::isConnected() === false) {
+            $this->show('postGuest', 'Billet', $dataToViews);
+        } elseif (User::isAdmin() === true) {
+            $this->show('postAdmin', 'Billet', $dataToViews);
+        } else {
+            $this->show('postUser', 'Billet - Blog de Jean Forteroche', $dataToViews);
+        }
     }
 }

@@ -7,7 +7,14 @@ use P4blog\Utils\PageTemplate;
 
 class CoreController
 {
-    protected function show(string $title, string $view, array $viewVars = [])
+    /**
+     * Méthode générique appelant une View  en lui passant un titre et des variables communes à toutes les Views.
+     *
+     * @param string $title
+     * @param string $view
+     * @param mixed array
+     */
+    protected function show(string $view, string $title, array $viewVars = [])
     {
         if (!isset($tpl)) {
             $tpl = new PageTemplate();
@@ -27,7 +34,19 @@ class CoreController
     }
 
     /**
-     * redirect.
+     * Méthode permettant d'afficher une réponse JSON après une requête Ajax.
+     *
+     * @param mixed $data
+     */
+    protected static function sendJson($data)
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Méthode permettant de faire une redirection en PHP.
      *
      * @param string $url
      */
