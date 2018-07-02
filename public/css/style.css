@@ -111,6 +111,10 @@ body {
   border: none;
 }
 
+.errors-hide {
+  display: none;
+}
+
 .connection-form-btn,
 .registration-form-btn {
   font-family: 'Ultra', serif;

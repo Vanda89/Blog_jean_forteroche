@@ -1,0 +1,17 @@
+{
+    "name": "sandrine/p4_blog",
+    "authors": [
+        {
+            "name": "Vanda89",
+            "email": "sandrinealcazar@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^4.1"
+    },
+    "autoload":{
+        "psr-4": {
+            "P4blog\\":"app/"
+        }
+    }
+}

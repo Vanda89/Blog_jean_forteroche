@@ -5,6 +5,8 @@ namespace P4blog\Controllers;
 use P4blog\Models\UserModel;
 use P4blog\Utils\User;
 use P4blog\Utils\Config;
+use P4blog\Models\CommentsModel;
+use P4blog\Models\PostsModel;
 
 class UserController extends CoreController
 {
@@ -144,17 +146,34 @@ class UserController extends CoreController
     }
 
     /**
-     * validateComment.
+     * Méthode de validation d'un commentaire reporté par l'admin et redirection vers sa home.
      */
     public function validateComment()
     {
+        if (isset($_POST['idComment'])) {
+            CommentsModel::validate($_POST['idComment']);
+        }
+        $this->redirect('/');
     }
 
     /**
      * deleteComment.
      */
+    public function deleteReportedComment()
+    {
+        if (isset($_POST['idComment'])) {
+            CommentsModel::delete($_POST['idComment']);
+        }
+        $this->redirect('/');
+    }
+
     public function deleteComment()
     {
+        dump($_POST);
+        if (isset($_POST['idComment'])) {
+            CommentsModel::delete($_POST['idComment']);
+        }
+        // $this->redirect('/post/get?id='.$_POST['idPost']);
     }
 
     /**
@@ -166,19 +185,16 @@ class UserController extends CoreController
     }
 
     /**
-     * savePost.
-     */
-    public function savePost()
-    {
-        var_dump($_POST);
-    }
-
-    /**
      * publishPost.
      */
     public function publishPost()
     {
-        var_dump($_POST);
+        // var_dump($_POST);
+        if (isset($_POST)) {
+            PostsModel::add($_POST['title'], $_POST['content']);
+        }
+
+        $this->redirect('/');
     }
 
     /**
@@ -186,7 +202,15 @@ class UserController extends CoreController
      */
     public function editPost()
     {
-        $this->show('editionPost', 'Page d\'édition');
+        $postId = $_GET['id'];
+
+        $post = PostsModel::find($postId);
+
+        $dataToViews = [
+            'post' => $post,
+        ];
+
+        $this->show('editionPost', 'Page d\'édition', $dataToViews);
     }
 
     /**
@@ -195,6 +219,8 @@ class UserController extends CoreController
     public function archievePost()
     {
         var_dump($_POST);
+
+        PostsModel::archieve($postId);
     }
 
     /**
@@ -203,6 +229,8 @@ class UserController extends CoreController
     public function updatePost()
     {
         var_dump($_POST);
+
+        PostsModel::update();
     }
 
     /**
@@ -211,6 +239,6 @@ class UserController extends CoreController
     public function disconnect()
     {
         User::disconnect();
-        $this->redirect(Config::getConfig('BASE_PATH').'/');
+        $this->redirect('/');
     }
 }

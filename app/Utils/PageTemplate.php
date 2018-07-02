@@ -12,6 +12,9 @@ class PageTemplate
 
     public $basePath;
 
+    /**
+     * __construct.
+     */
     public function __construct()
     {
         $this->basePath = Config::getConfig('BASE_PATH');

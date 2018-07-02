@@ -1,1 +1,4 @@
 /app/config.conf
+composer.lock
+vendor
+composer.phar

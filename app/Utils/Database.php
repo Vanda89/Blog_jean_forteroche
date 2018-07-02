@@ -4,6 +4,9 @@ namespace P4blog\Utils;
 
 class Database
 {
+    /**
+     * dbConnect.
+     */
     public static function dbConnect()
     {
         $dbhost = Config::getConfig('DB_HOST');

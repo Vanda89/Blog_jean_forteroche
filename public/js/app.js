@@ -69,11 +69,14 @@ var app = {
       url: "./signup/submit"
     }, app.submitForm);
 
-
+    $('.report-form').on('submit', {
+      url: "./comment/report"
+    }, app.submitForm);
 
   },
 
   submitForm: function (evt) {
+    
     evt.preventDefault();
     var $currentForm = $(this);
     var formData = $currentForm.serialize();
@@ -83,7 +86,7 @@ var app = {
       dataType: 'json',
       data: formData
     }).done(function (response) {
-      console.log(response['url']);
+      console.log(response);
       if (response['url'] != undefined) {
         document.location.href = response['url']
 
@@ -94,6 +97,13 @@ var app = {
           errors += element + '<br>';
         })
         $('#errors').html(errors);
+      }
+
+      if (response['reported'] != undefined) {
+        // TODO afficher un message dans une balise
+        alert('Vous avez bien signalé le commentaire')
+        
+
       }
 
     }).fail(function () {

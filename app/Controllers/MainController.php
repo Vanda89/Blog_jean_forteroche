@@ -44,7 +44,6 @@ class MainController extends CoreController
     {
         $post = PostsModel::find($id);
         $comments = CommentsModel::findCommentsByPostId($id);
-
         $dataToViews = [
             'post' => $post,
             'comments' => $comments,

@@ -2,11 +2,11 @@
   <section class="text-editor-container container d-flex flex-column">
     <div class="text-editor-row row bg-dark mb-4 pb-0">
       <form method="post" class="text-editor-form container px-1">
-        <input id="title-post-editor">Titre...</input>
+        <input id="title-post-editor" value="<?= $tpl->viewVars['post']->getTitle(); ?>"></input>
       </form>
 
       <form method="post" class="text-editor-form container px-1">
-        <textarea id="content-post-editor">Texte...</textarea>
+        <textarea id="content-post-editor"><?= $tpl->viewVars['post']->getPostContent(); ?></textarea>
       </form>
     </div>
 

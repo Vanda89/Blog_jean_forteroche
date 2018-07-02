@@ -7,15 +7,20 @@ use PDO;
 
 class CommentsModel
 {
+    private $id_comment;
     private $author;
     private $comment_content;
+    //status => 0 = valide et publié, 1 = reporté, 2 = archivé
     private $status;
     private $comment_date;
-    private $comment_reported;
     private $update_date;
     private $Posts_id_post;
     private $User_id_user;
+    private $title;
 
+    /**
+     * findAll.
+     */
     public static function findAll()
     {
         $sql = '
@@ -36,6 +41,11 @@ class CommentsModel
         return $results;
     }
 
+    /**
+     * find.
+     *
+     * @param mixed $idComment
+     */
     public static function find($idComment)
     {
         $sql = '
@@ -54,11 +64,14 @@ class CommentsModel
         return $pdoStatement->fetchObject(self::class);
     }
 
+    /**
+     * add.
+     */
     public function add()
     {
         $sql = '
-            INSERT INTO comments (author, comment_content, status, comment_date, comment_reported)
-            VALUES (:author, :commentContent, :status, NOW(), :noReported)
+            INSERT INTO comments (author, comment_content, status, comment_date)
+            VALUES (:author, :commentContent, :status, NOW(),)
         ';
 
         // On récupère la connextion PDO à la DB
@@ -69,76 +82,20 @@ class CommentsModel
         $pdoStatement->bindValue(':title', $this->author, PDO::PARAM_STR);
         $pdoStatement->bindValue(':commentContent', $this->comment_content, PDO::PARAM_STR);
         $pdoStatement->bindValue(':status', $this->status, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':noReported', $this->comment_reported, PDO::PARAM_INT);
         $pdoStatement->execute();
     }
 
-    public function reported()
+    /**
+     * reported.
+     */
+    public static function reported(int $idComment)
     {
         $sql = '
             UPDATE comments
-            SET status = :newStatus, comment_reported = :reported
-            WHERE id_comment = (:idComment)
-        ';
-
-        // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect();
-        // On prépare une requête à l'exécution et retourne un objet
-        $pdoStatement = $pdo->prepare($sql);
-        // Association des valeurs aux champs de la bdd et paramètrage du retour
-        $pdoStatement->bindValue(':newStatus', $this->status, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':reported', $this->comment_reported, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':idComment', $this->id_comment, PDO::PARAM_INT);
-        $pdoStatement->execute();
-    }
-
-    public function validate()
-    {
-        $sql = '
-            UPDATE comments
-            SET status = :oldStatus, comment_reported = :noReported
-            WHERE id_comment = (:idComment)
-        ';
-
-        // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect();
-        // On prépare une requête à l'exécution et retourne un objet
-        $pdoStatement = $pdo->prepare($sql);
-        // Association des valeurs aux champs de la bdd et paramètrage du retour
-        $pdoStatement->bindValue(':oldStatus', $this->status, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':noReported', $this->comment_reported, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':idComment', $this->id_comment, PDO::PARAM_INT);
-        $pdoStatement->execute();
-    }
-
-    public function delete()
-    {
-        $sql = '
-            UPDATE comments
-            SET status = :newStatus
-            WHERE id_comment = (:idComment)
-        ';
-
-        // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect();
-        // On prépare une requête à l'exécution et retourne un objet
-        $pdoStatement = $pdo->prepare($sql);
-        // Association des valeurs aux champs de la bdd et paramètrage du retour
-        $pdoStatement->bindValue(':newStatus', $this->status, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':idComment', $this->id_comment, PDO::PARAM_INT);
-        $pdoStatement->execute();
-    }
-
-    public static function findCommentsByPostId($idComment)
-    {
-        $sql = '
-            SELECT *
-            FROM comments
-            INNER JOIN posts 
-            ON id_comment = Posts_id_post         
+            SET status = 1
             WHERE id_comment = :idComment
-            ORDER BY comment_date DESC
         ';
+
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
         // On prépare une requête à l'exécution et retourne un objet
@@ -146,18 +103,87 @@ class CommentsModel
         // Association des valeurs aux champs de la bdd et paramètrage du retour
         $pdoStatement->bindValue(':idComment', $idComment, PDO::PARAM_INT);
         $pdoStatement->execute();
+    }
+
+    /**
+     * validate.
+     */
+    public static function validate($idComment)
+    {
+        $sql = '
+            UPDATE comments
+            SET status = 0
+            WHERE id_comment = :idComment
+        ';
+
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idComment', $idComment, PDO::PARAM_INT);
+        $pdoStatement->execute();
+    }
+
+    /**
+     * delete.
+     */
+    public static function delete($idComment)
+    {
+        $sql = '
+            UPDATE comments
+            SET status = 2
+            WHERE id_comment = :idComment
+        ';
+
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idComment', $idComment, PDO::PARAM_INT);
+        $pdoStatement->execute();
+    }
+
+    /**
+     * findCommentsByPostId.
+     *
+     * @param mixed $idComment
+     */
+    public static function findCommentsByPostId($idPost)
+    {
+        $sql = '
+            SELECT *
+            FROM comments AS c
+            INNER JOIN posts AS p
+            ON c.Posts_id_post = p.id_post         
+            WHERE c.Posts_id_post = :idPost AND c.status < 2
+            ORDER BY c.comment_date DESC
+        ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+        $pdoStatement->execute();
 
         return $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
+    /**
+     * findAllByReport.
+     */
     public static function findAllByReport()
     {
         $sql = '
-            SELECT *
-            FROM comments                
-            WHERE comment_reported = 1
-            ORDER BY comment_date DESC
-        ';
+            SELECT c.id_comment, c.author, c.comment_content, c.status, c.comment_date, p.title
+            FROM comments AS c  
+            INNER JOIN posts AS p
+            ON c.Posts_id_post = p.id_post        
+            WHERE c.status = 1
+            ORDER BY c.comment_date DESC
+            ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
         // On prépare une requête à l'exécution et retourne un objet
@@ -169,6 +195,14 @@ class CommentsModel
     }
 
     // GETTERS AND SETTERS
+
+    /**
+     * Get the value of id_comment.
+     */
+    public function getIdComment()
+    {
+        return $this->id_comment;
+    }
 
     /**
      * Get the value of author.
@@ -328,5 +362,13 @@ class CommentsModel
         $this->User_id_user = $User_id_user;
 
         return $this;
+    }
+
+    /**
+     * Get the value of title.
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

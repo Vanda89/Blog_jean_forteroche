@@ -5,72 +5,23 @@
       <p class="text-right w-100">Retrouvez chaque semaine un nouvel épisode de mon nouveau roman</p>
     </header>
 
+    <?php foreach ($tpl->viewVars['allPosts'] as $key => $value) :?>
     <div class="post-row row mt-5 mb-5">
       <div class="post container d-flex flex-column">
         <div class="post-header row d-flex flex-column justify-content-center p-4">
-          <h3 class="post-title">Titre du billet</h3>
-          <p class="post-date align-self-end">12/06/18</p>
+          <h3 class="post-title"><?= $value->getTitle(); ?></h3>
+          <p class="post-date align-self-end"><?= $value->getCreationDate(); ?></p>
         </div>
         <article class="post-content row m-0 pb-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas eveniet nam voluptatibus quo suscipit, culpa rem, fugit
-          saepe excepturi nesciunt dignissimos totam fuga tenetur! Magni tempora quos repellat officiis amet accusantium
-          quae a. Numquam sit fuga magni! Beatae mollitia tempora est voluptate at, fuga quidem, ducimus sed nisi, magni
-          itaque eum minus perspiciatis ipsa aliquam delectus doloribus consequuntur. Nam provident numquam corrupti
-          eligendi autem reprehenderit aliquid architecto. Aperiam, delectus assumenda similique. Suscipit minima dolores
-          expedita, neque nemo optio illo eaque in incidunt debitis. Sequi vitae illo quo, aliquam aut ratione excepturi
-          amet suscipit, accusamus ea ut. Ipsa quibusdam est cupiditate, quo aliquid illum eaque. Sequi reiciendis, omnis
-          sit nulla doloremque ad similique at? Dolorum, eum ab illum atque voluptatum, ex quis ipsam perspiciatis.
+          <?= $value->getPostContent(); ?>
         </article>
         <div class="row d-flex justify-content-between pr-4">
-          <a href="#" class="read-more row pb-3 pl-5">Lire la suite...</a>
-          <p class="comments-number">3 commentaires</p>
+          <a href="<?= $tpl->basePath; ?>/post/get?id= <?= $value->getId_post(); ?>" class="read-more row pb-3 pl-5">Lire la suite...</a>
         </div>
       </div>
     </div>
-    <div class="post-row row mt-5 mb-5">
-      <div class="post container d-flex flex-column">
-        <div class="post-header row d-flex flex-column justify-content-center p-4">
-          <h3 class="post-title">Titre du billet</h3>
-          <p class="post-date align-self-end">12/06/18</p>
-        </div>
-        <article class="post-content row m-0 pb-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas eveniet nam voluptatibus quo suscipit, culpa rem, fugit
-          saepe excepturi nesciunt dignissimos totam fuga tenetur! Magni tempora quos repellat officiis amet accusantium
-          quae a. Numquam sit fuga magni! Beatae mollitia tempora est voluptate at, fuga quidem, ducimus sed nisi, magni
-          itaque eum minus perspiciatis ipsa aliquam delectus doloribus consequuntur. Nam provident numquam corrupti
-          eligendi autem reprehenderit aliquid architecto. Aperiam, delectus assumenda similique. Suscipit minima dolores
-          expedita, neque nemo optio illo eaque in incidunt debitis. Sequi vitae illo quo, aliquam aut ratione excepturi
-          amet suscipit, accusamus ea ut. Ipsa quibusdam est cupiditate, quo aliquid illum eaque. Sequi reiciendis, omnis
-          sit nulla doloremque ad similique at? Dolorum, eum ab illum atque voluptatum, ex quis ipsam perspiciatis.
-        </article>
-        <div class="row d-flex justify-content-between pr-4">
-          <a href="#" class="read-more row pb-3 pl-5">Lire la suite...</a>
-          <p class="comments-number">3 commentaires</p>
-        </div>
-      </div>
-    </div>
-    <div class="post-row row mt-5 mb-5">
-      <div class="post container d-flex flex-column">
-        <div class="post-header row d-flex flex-column justify-content-center p-4">
-          <h3 class="post-title">Titre du billet</h3>
-          <p class="post-date align-self-end">12/06/18</p>
-        </div>
-        <article class="post-content row m-0 pb-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas eveniet nam voluptatibus quo suscipit, culpa rem, fugit
-          saepe excepturi nesciunt dignissimos totam fuga tenetur! Magni tempora quos repellat officiis amet accusantium
-          quae a. Numquam sit fuga magni! Beatae mollitia tempora est voluptate at, fuga quidem, ducimus sed nisi, magni
-          itaque eum minus perspiciatis ipsa aliquam delectus doloribus consequuntur. Nam provident numquam corrupti
-          eligendi autem reprehenderit aliquid architecto. Aperiam, delectus assumenda similique. Suscipit minima dolores
-          expedita, neque nemo optio illo eaque in incidunt debitis. Sequi vitae illo quo, aliquam aut ratione excepturi
-          amet suscipit, accusamus ea ut. Ipsa quibusdam est cupiditate, quo aliquid illum eaque. Sequi reiciendis, omnis
-          sit nulla doloremque ad similique at? Dolorum, eum ab illum atque voluptatum, ex quis ipsam perspiciatis.
-        </article>
-        <div class="row d-flex justify-content-between pr-4">
-          <a href="#" class="read-more row pb-3 pl-5">Lire la suite...</a>
-          <p class="comments-number">3 commentaires</p>
-        </div>
-      </div>
-    </div>
+    <?php endforeach; ?>
+
     <div class="row d-flex justify-content-center">
       <nav class="posts-list-pagination" aria-label="Page navigation example">
         <ul class="pagination">

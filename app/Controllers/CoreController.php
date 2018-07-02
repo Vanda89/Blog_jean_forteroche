@@ -4,6 +4,7 @@ namespace P4blog\Controllers;
 
 use P4blog\Utils\User;
 use P4blog\Utils\PageTemplate;
+use P4blog\Utils\Config;
 
 class CoreController
 {
@@ -52,7 +53,7 @@ class CoreController
      */
     protected function redirect(string $url)
     {
-        header('Location: '.$url);
+        header('Location: '.Config::getConfig('BASE_PATH').$url);
         exit;
     }
 }

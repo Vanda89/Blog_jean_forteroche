@@ -61,7 +61,12 @@ switch ($currentURL) {
   $controller->validateComment();
     break;
 
-  case '/admin/delete':
+  case '/admin/reported/delete':
+  $controller = new UserController();
+  $controller->deleteReportedComment();
+    break;
+
+  case '/admin/post/comment/delete':
   $controller = new UserController();
   $controller->deleteComment();
     break;
@@ -73,20 +78,25 @@ switch ($currentURL) {
   $controller->createPost();
     break;
 
-  case '/admin/post/create/save':
-  $controller = new UserController();
-  $controller->savePost();
-    break;
-
   case '/admin/post/create/publish':
   $controller = new UserController();
   $controller->publishPost();
     break;
 
+  //routes dynamiques avec get
   case '/admin/post/edit':
-  $controller = new UserController();
-  $controller->editPost();
+  if (isset($_GET['id'])) {
+      $controller = new UserController();
+      $controller->editPost($_GET['id']);
+  } else {
+      echo 'Erreur 404';
+  }
     break;
+
+  // case '/admin/post/edit':
+  // $controller = new UserController();
+  // $controller->editPost();
+  //   break;
 
   case '/admin/post/edit/archieve':
   $controller = new UserController();
