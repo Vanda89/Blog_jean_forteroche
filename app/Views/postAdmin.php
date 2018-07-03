@@ -86,9 +86,10 @@
           </nav>
         </div>
 
-        <form class="comments-container-form row d-flex flex-column my-5 py-4 px-5" action="" method="post">
-          <textarea class="form-control mb-4" type="text" name="add-comment" placeholder="Ecrivez votre commentaire ici..." id="add-comment"
+        <form class="comments-container-form row d-flex flex-column my-5 py-4 px-5" action="<?= $tpl->basePath; ?>/post/comment/add" method="post">
+          <textarea class="form-control mb-4" type="text" name="commentContent" placeholder="Ecrivez votre commentaire ici..." id="add-comment"
             cols="50" rows="7"></textarea>
+          <input type="hidden" name="idPost" value="<?= $tpl->viewVars['post']->getId_post(); ?>">
           <button class="add btn btn-secondary w-25 font-weight-bold" type="submit">
             <i class="fas fa-plus-square pl-0 mr-1"></i> Ajouter
           </button>

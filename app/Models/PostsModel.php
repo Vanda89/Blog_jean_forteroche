@@ -105,11 +105,11 @@ class PostsModel
     /**
      * update.
      */
-    public function update()
+    public static function update($title)
     {
         $sql = '
             UPDATE posts
-            SET title = :newTitle, post_content = :newPostContent, status = :newStatus, update_date = NOW()
+            SET title = :newTitle, post_content = :newPostContent, update_date = NOW()
             WHERE id_post = (:idPost)
         ';
         // On récupère la connextion PDO à la DB
@@ -119,7 +119,6 @@ class PostsModel
         // Association des valeurs aux champs de la bdd et paramètrage du retour
         $pdoStatement->bindValue(':newTitle', self::title, PDO::PARAM_STR);
         $pdoStatement->bindValue(':newPostContent', self::post_content, PDO::PARAM_STR);
-        $pdoStatement->bindValue(':newStatus', self::status, PDO::PARAM_INT);
         $pdoStatement->bindValue(':idPost', self::id_post, PDO::PARAM_INT);
         $pdoStatement->execute();
     }

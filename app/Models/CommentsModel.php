@@ -67,11 +67,11 @@ class CommentsModel
     /**
      * add.
      */
-    public function add()
+    public static function add($idPost, $author, $commentContent)
     {
         $sql = '
-            INSERT INTO comments (author, comment_content, status, comment_date)
-            VALUES (:author, :commentContent, :status, NOW(),)
+            INSERT INTO comments (Posts_id_post, author, comment_content, status, comment_date)
+            VALUES (:idPost, :author, :commentContent, 1, NOW())
         ';
 
         // On récupère la connextion PDO à la DB
@@ -79,9 +79,9 @@ class CommentsModel
         // On prépare une requête à l'exécution et retourne un objet
         $pdoStatement = $pdo->prepare($sql);
         // Association des valeurs aux champs de la bdd et paramètrage du retour
-        $pdoStatement->bindValue(':title', $this->author, PDO::PARAM_STR);
-        $pdoStatement->bindValue(':commentContent', $this->comment_content, PDO::PARAM_STR);
-        $pdoStatement->bindValue(':status', $this->status, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':author', $author, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':commentContent', $commentContent, PDO::PARAM_STR);
         $pdoStatement->execute();
     }
 

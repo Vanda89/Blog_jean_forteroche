@@ -169,11 +169,10 @@ class UserController extends CoreController
 
     public function deleteComment()
     {
-        dump($_POST);
         if (isset($_POST['idComment'])) {
             CommentsModel::delete($_POST['idComment']);
         }
-        // $this->redirect('/post/get?id='.$_POST['idPost']);
+        $this->redirect('/post/get?id='.$_POST['idPost']);
     }
 
     /**

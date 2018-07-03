@@ -3,6 +3,7 @@
 namespace P4blog\Controllers;
 
 use P4blog\Models\CommentsModel;
+use P4blog\Utils\User;
 
 // use P4blog\Models\CommentsModel;
 
@@ -13,7 +14,11 @@ class CommentController extends CoreController
      */
     public function addComment()
     {
-        var_dump($_POST);
+        $user = User::getConnectedUser();
+        $author = $user->getName();
+        CommentsModel::add($_POST['idPost'], $author, $_POST['commentContent']);
+
+        $this->redirect('/post/get?id='.$_POST['idPost']);
     }
 
     /**
