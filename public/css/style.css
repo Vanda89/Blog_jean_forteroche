@@ -191,34 +191,6 @@ h5 {
 }
 
 /**************************BACK***************************/
-
-.blog-header-admin {
-  font-family: 'Marck Script', cursive;
-  background: burlywood;
-}
-
-.blog-author-admin {
-  padding: 0;
-  margin: 0;
-  font-size: 3em;
-}
-
-.home-admin,
-.creation,
-.disconnection-admin {
-  font-size: 1.1em;
-  color: burlywood;
-}
-
-.home-admin:hover,
-.creation:hover,
-.disconnection-admin:hover {
-  color: black;
-  background-color: white;
-}
-
-/* .posts-list-admin-container {} */
-
 .posts-list-admin {
   color: #343A40;
 }
@@ -231,9 +203,9 @@ h5 {
   box-shadow: inset 0.1em 0.1em 2.5em rgb(141, 116, 84), 0.5em 0em 1em rgb(30, 34, 37);
 }
 
-.text-editor-row {
+.editor-row {
   border: 11px solid #343A40;
-  border-bottom: none;
+  border-radius: 10px;
 }
 
 .comment-report {
@@ -267,11 +239,6 @@ h5 {
   color: rgb(128, 77, 10);
 }
 
-.validate-comment,
-.delete-comment {
-  /* color: #343A40;
-  text-decoration: none; */
-}
 /*************************FRONT***************************/
 
 .blog-header {
@@ -281,12 +248,19 @@ h5 {
 .blog-author {
   padding: 0;
   margin: 0;
-  font-size: 3em;
+  font-size: 2.5em;
+  color: white;
+}
+
+.blog-author:hover {
+  color: burlywood;
+  text-decoration: none;
 }
 
 .connection,
 .registration,
 .home,
+.creation,
 .disconnection {
   font-size: 1.1em;
   color: #343A40;
@@ -295,6 +269,7 @@ h5 {
 .connection:hover,
 .registration:hover,
 .home:hover,
+.creation:hover,
 .disconnection:hover {
   color: white;
   background-color: burlywood;

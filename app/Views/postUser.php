@@ -18,6 +18,7 @@
 
     <div class="comments-row row my-5">
       <div class="comments-container container d-flex flex-column justify-content-between mb-5">
+        <?php if ($tpl->viewVars['totalComments'] > 0):?>
         <div class="comment-row row mb-5">
         <?php foreach ($tpl->viewVars['comments'] as $key => $value) :?>
           <div class="comment container d-flex flex-column justify-content-between">
@@ -35,7 +36,9 @@
           </div>
           <?php endforeach; ?>
         </div>
+        <?php endif; ?>
 
+        <?php if ($tpl->viewVars['totalComments'] > 10):?>
         <div class="row d-flex justify-content-center">
           <nav class="posts-list-pagination" aria-label="Page navigation example">
             <ul class="pagination">
@@ -67,12 +70,14 @@
             </ul>
           </nav>
         </div>
+        <?php endif; ?>
 
-        <form class="comments-container-form row d-flex flex-column my-5 py-4 px-5" action="" method="post">
-          <textarea class="form-control mb-4" type="text" name="add-comment" placeholder="Ecrivez votre commentaire ici..." id="add-comment"
+        <form class="comments-container-form row d-flex flex-column my-5 py-4 px-5" action="<?= $tpl->basePath; ?>/post/comment/add" method="post">
+          <textarea class="form-control mb-4" type="text" name="commentContent" placeholder="Ecrivez votre commentaire ici..." id="add-comment"
             cols="50" rows="7"></textarea>
-          <button class="add btn btn-secondary w-25" type="submit">
-            <i class="fas fa-plus-square mr-1"></i> Ajouter le commentaire
+          <input type="hidden" name="idPost" value="<?= $tpl->viewVars['post']->getId_post(); ?>">
+          <button class="add btn btn-secondary w-25 font-weight-bold" type="submit">
+            <i class="fas fa-plus-square pl-0 mr-1"></i> Ajouter
           </button>
         </form>
       </div>

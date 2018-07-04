@@ -188,8 +188,7 @@ class UserController extends CoreController
      */
     public function publishPost()
     {
-        // var_dump($_POST);
-        if (isset($_POST)) {
+        if (!empty($_POST['title']) && !empty($_POST['content'])) {
             PostsModel::add($_POST['title'], $_POST['content']);
         }
 
@@ -215,21 +214,23 @@ class UserController extends CoreController
     /**
      * archievePost.
      */
-    public function archievePost()
-    {
-        var_dump($_POST);
+    // public function archievePost()
+    // {
+    //     var_dump($_POST);
 
-        PostsModel::archieve($postId);
-    }
+    //     PostsModel::archieve($postId);
+    // }
 
     /**
      * updatePost.
      */
     public function updatePost()
     {
-        var_dump($_POST);
+        if (isset($_POST) && ($_GET)) {
+            PostsModel::update(intval($_GET['id']), $_POST['title'], $_POST['content']);
+        }
 
-        PostsModel::update();
+        $this->redirect('/');
     }
 
     /**
@@ -238,6 +239,7 @@ class UserController extends CoreController
     public function disconnect()
     {
         User::disconnect();
+
         $this->redirect('/');
     }
 }

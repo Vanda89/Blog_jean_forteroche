@@ -19,7 +19,7 @@ var app = {
         'insertdatetime media table contextmenu paste code help wordcount '
       ],
       toolbar: [
-        'insert | undo redo | formatselect | styleselect | bold italic | forecolor backcolor | quicklink h2 h3 blockquote | link image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+        'insert | undo redo | styleselect | italic | forecolor backcolor | quicklink h2 h3 blockquote | link image | bullist numlist outdent indent | removeformat | help'
       ],
       content_css: [
         ' //fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tinymce.com/css/codepen.min.css'
@@ -48,7 +48,7 @@ var app = {
         'insertdatetime media table contextmenu paste code help wordcount '
       ],
       toolbar: [
-        'insert | undo redo | formatselect | styleselect | bold italic | forecolor backcolor | quicklink h2 h3 blockquote | link image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+        'insert | undo redo | styleselect | bold italic | forecolor backcolor | quicklink h2 h3 blockquote | link image | bullist numlist outdent indent | removeformat | help'
       ],
       content_css: [
         ' //fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tinymce.com/css/codepen.min.css'

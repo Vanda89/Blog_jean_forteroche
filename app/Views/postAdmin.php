@@ -30,6 +30,7 @@
 
     <div class="comments-row row mb-5">
       <div class="comments-container container d-flex flex-column justify-content-between mb-5">
+        <?php if ($tpl->viewVars['totalComments'] > 0):?>
         <div class="comment-row row mb-5">
           <?php foreach ($tpl->viewVars['comments'] as $key => $value) :?>
           <div class="comment container d-flex flex-column justify-content-between">
@@ -53,7 +54,9 @@
           </div>
           <?php endforeach; ?>
         </div>
+        <?php endif; ?>
 
+        <?php if ($tpl->viewVars['totalComments'] > 10):?>
         <div class="post-pagination row d-flex justify-content-center">
           <nav class="posts-list-pagination" aria-label="Page navigation example">
             <ul class="pagination">
@@ -85,6 +88,7 @@
             </ul>
           </nav>
         </div>
+        <?php endif; ?>
 
         <form class="comments-container-form row d-flex flex-column my-5 py-4 px-5" action="<?= $tpl->basePath; ?>/post/comment/add" method="post">
           <textarea class="form-control mb-4" type="text" name="commentContent" placeholder="Ecrivez votre commentaire ici..." id="add-comment"

@@ -1,5 +1,3 @@
-<?php dump($tpl->viewVars); ?>
-
 <main class="blog-content row d-flex flex-column justify-content-between mt-5">
   <section class="post-container container d-flex flex-column">
     <header class="post-container-header row d-flex justify-content-between mb-5 p-3">
@@ -19,6 +17,7 @@
 
     <div class="comments-row row mt-5 mb-5">
       <div class="comments-container container d-flex flex-column justify-content-between mb-5">
+        <?php if ($tpl->viewVars['totalComments'] > 0):?>
         <div class="comment-row row mb-5">
           <?php foreach ($tpl->viewVars['comments'] as $key => $value) :?>
           <div class="comment container d-flex flex-column justify-content-between">
@@ -34,7 +33,9 @@
           </div>
           <?php endforeach; ?>
         </div>
+        <?php endif; ?>
         
+        <?php if ($tpl->viewVars['totalComments'] > 10):?>
         <div class="post-pagination row d-flex justify-content-center">
           <nav class="posts-list-pagination" aria-label="Page navigation example">
             <ul class="pagination">
@@ -66,6 +67,7 @@
             </ul>
           </nav>
         </div>
+        <?php endif; ?>
       </div>
     </div>
   </section>

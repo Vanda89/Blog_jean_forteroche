@@ -24,7 +24,7 @@ class PostsModel
         $sql = "
             SELECT id_post, title, post_content, status, DATE_FORMAT(creation_date, '%d/%m/%Y') AS creation_date, update_date
             FROM posts
-            ORDER BY creation_date DESC
+            ORDER BY creation_date
         ";
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
@@ -85,41 +85,41 @@ class PostsModel
     /**
      * archieve.
      */
-    public static function archieve()
-    {
-        $sql = '
-        UPDATE posts
-        SET status = 2
-        WHERE id_post = (:idPost)
-        ';
+    // public static function archieve()
+    // {
+    //     $sql = '
+    //     UPDATE posts
+    //     SET status = 2
+    //     WHERE id_post = (:idPost)
+    //     ';
 
-        // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect()($sql);
-        // On prépare une requête à l'exécution et retourne un objet
-        $pdoStatement = $pdo->prepare($sql);
-        // Association des valeurs aux champs de la bdd et paramètrage du retour
-        $pdoStatement->bindValue(':idPost', self::id_post, PDO::PARAM_INT);
-        $pdoStatement->execute();
-    }
+    //     // On récupère la connextion PDO à la DB
+    //     $pdo = Database::dbConnect()($sql);
+    //     // On prépare une requête à l'exécution et retourne un objet
+    //     $pdoStatement = $pdo->prepare($sql);
+    //     // Association des valeurs aux champs de la bdd et paramètrage du retour
+    //     $pdoStatement->bindValue(':idPost', self::id_post, PDO::PARAM_INT);
+    //     $pdoStatement->execute();
+    // }
 
     /**
      * update.
      */
-    public static function update($title)
+    public static function update($idPost, $title, $content)
     {
         $sql = '
             UPDATE posts
-            SET title = :newTitle, post_content = :newPostContent, update_date = NOW()
-            WHERE id_post = (:idPost)
+            SET title = :title, post_content = :postContent, update_date = NOW()
+            WHERE id_post = :idPost
         ';
         // On récupère la connextion PDO à la DB
-        $pdo = Database::dbConnect()($sql);
+        $pdo = Database::dbConnect($sql);
         // On prépare une requête à l'exécution et retourne un objet
         $pdoStatement = $pdo->prepare($sql);
         // Association des valeurs aux champs de la bdd et paramètrage du retour
-        $pdoStatement->bindValue(':newTitle', self::title, PDO::PARAM_STR);
-        $pdoStatement->bindValue(':newPostContent', self::post_content, PDO::PARAM_STR);
-        $pdoStatement->bindValue(':idPost', self::id_post, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':title', $title, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':postContent', $content, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':idPost', $idPost, PDO::PARAM_INT);
         $pdoStatement->execute();
     }
 
@@ -214,9 +214,13 @@ class PostsModel
     /**
      * Get the value of update_date.
      */
-    public function getUpdateDate(): int
+    public function getUpdateDate(): string
     {
-        return $this->update_date;
+        if (isset($this->update_date)) {
+            return $this->update_date;
+        } else {
+            return '-';
+        }
     }
 
     /**
