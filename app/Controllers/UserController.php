@@ -115,7 +115,6 @@ class UserController extends CoreController
             }
 
             if (!empty($mail) && UserModel::findByMail($mail)) {
-                // Ajouter un message d'erreur
                 $errorList[] = 'Cette adresse email existe déjà !';
             }
 
@@ -146,13 +145,16 @@ class UserController extends CoreController
     }
 
     /**
-     * Méthode de validation d'un commentaire reporté par l'admin et redirection vers sa home.
+     * validateComment.
      */
-    public function validateComment()
+    public function validateCommentReported()
     {
+        // S'il existe un commentaire reporté, on le valide
         if (isset($_POST['idComment'])) {
             CommentsModel::validate($_POST['idComment']);
         }
+
+        // Redirection vers la home
         $this->redirect('/');
     }
 
@@ -161,17 +163,23 @@ class UserController extends CoreController
      */
     public function deleteReportedComment()
     {
+        // S'il existe un commentaire reporté, on le supprime
         if (isset($_POST['idComment'])) {
             CommentsModel::delete($_POST['idComment']);
         }
+
+        // Redirection vers la home
         $this->redirect('/');
     }
 
     public function deleteComment()
     {
+        // S'il existe un commentaire, on le supprime
         if (isset($_POST['idComment'])) {
             CommentsModel::delete($_POST['idComment']);
         }
+
+        // Redirection vers le post
         $this->redirect('/post/get?id='.$_POST['idPost']);
     }
 
@@ -188,10 +196,12 @@ class UserController extends CoreController
      */
     public function publishPost()
     {
+        // Si le titre du post et son contenu sont bien remplis, on l'envoi dans la bdd
         if (!empty($_POST['title']) && !empty($_POST['content'])) {
             PostsModel::add($_POST['title'], $_POST['content']);
         }
 
+        // Redirection vers la home
         $this->redirect('/');
     }
 
@@ -210,16 +220,6 @@ class UserController extends CoreController
 
         $this->show('editionPost', 'Page d\'édition', $dataToViews);
     }
-
-    /**
-     * archievePost.
-     */
-    // public function archievePost()
-    // {
-    //     var_dump($_POST);
-
-    //     PostsModel::archieve($postId);
-    // }
 
     /**
      * updatePost.

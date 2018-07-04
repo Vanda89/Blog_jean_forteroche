@@ -58,7 +58,7 @@ switch ($currentURL) {
 
   case '/admin/validate':
   $controller = new UserController();
-  $controller->validateComment();
+  $controller->validateCommentReported();
     break;
 
   case '/admin/reported/delete':
@@ -92,11 +92,6 @@ switch ($currentURL) {
       echo 'Erreur 404';
   }
     break;
-
-  // case '/admin/post/edit':
-  // $controller = new UserController();
-  // $controller->editPost();
-  //   break;
 
   case '/admin/post/edit/archieve':
   $controller = new UserController();

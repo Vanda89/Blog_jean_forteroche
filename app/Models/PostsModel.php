@@ -21,11 +21,11 @@ class PostsModel
      */
     public static function findAll()
     {
-        $sql = "
-            SELECT id_post, title, post_content, status, DATE_FORMAT(creation_date, '%d/%m/%Y') AS creation_date, update_date
+        $sql = '
+            SELECT id_post, title, post_content, status, creation_date, update_date
             FROM posts
             ORDER BY creation_date
-        ";
+        ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
 
@@ -134,7 +134,7 @@ class PostsModel
     /**
      * Get the value of title.
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -154,7 +154,7 @@ class PostsModel
     /**
      * Get the value of post_content.
      */
-    public function getPostContent(): string
+    public function getPostContent()
     {
         return $this->post_content;
     }
@@ -174,7 +174,7 @@ class PostsModel
     /**
      * Get the value of status.
      */
-    public function getStatus(): int
+    public function getStatus()
     {
         return $this->status;
     }
@@ -194,7 +194,7 @@ class PostsModel
     /**
      * Get the value of creation_date.
      */
-    public function getCreationDate(): string
+    public function getCreationDate()
     {
         return $this->creation_date;
     }
@@ -204,7 +204,7 @@ class PostsModel
      *
      * @return self
      */
-    public function setCreationDate(string $creation_date)
+    public function setCreationDate($creation_date)
     {
         $this->creation_date = $creation_date;
 
@@ -214,7 +214,7 @@ class PostsModel
     /**
      * Get the value of update_date.
      */
-    public function getUpdateDate(): string
+    public function getUpdateDate()
     {
         if (isset($this->update_date)) {
             return $this->update_date;

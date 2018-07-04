@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="<?= $tpl->basePath; ?>/css/style.css">
+  <link rel="stylesheet" href="<?= $tpl->basePath; ?>css/style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
   <title>
@@ -19,7 +19,7 @@
 <body>
   <div class="container-fluid d-flex flex-column justify-content-between">
     <header class="blog-header row navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-around align-items-center mb-5">
-      <h1 class="blog-author navbar-brand">Jean Forteroche</h1>
+      <h1 class="navbar-brand mb-0 pb-0"><a href="<?= $tpl->basePath; ?>/" class="blog-author">Jean Forteroche</a></h1>
       <nav class="blog-header-nav d-flex justify-content-between align-items-center">
         <nav class="blog-nav">
           <ul class="nav navbar-nav d-flex justify-content-between align-items-center">
@@ -42,14 +42,14 @@
             <?php endif; ?>
             <?php if ($tpl->isConnected === true && $tpl->isAdmin === true) : ?>
             <li>
-              <a href="<?= $tpl->basePath; ?>/admin/post/create" class="creation btn btn-dark mr-3">
+              <a href="<?= $tpl->basePath; ?>/admin/post/create" class="creation btn btn-light mr-3">
                 <i class="fas fa-pencil-alt"></i> Création
               </a>
             </li>
             <?php endif; ?>
             <?php if ($tpl->isConnected === true) : ?>
             <li>
-              <a href="<?= $tpl->basePath; ?>/disconnection" class="disconnection-admin btn btn-dark">
+              <a href="<?= $tpl->basePath; ?>/disconnection" class="disconnection btn btn-light">
                 <i class="fas fa-sign-out-alt"></i> Déconnexion
               </a>
             </li>

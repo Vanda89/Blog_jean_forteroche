@@ -19,11 +19,16 @@ class MainController extends CoreController
     public function showHome()
     {
         $allPosts = PostsModel::findAll();
+        // $allComments = CommentsModel::findCommentsByPostId($id);
         $allCommentsReported = CommentsModel::findAllByReport();
+        // dump($allComments);
 
         $dataToViews = [
             'allPosts' => $allPosts,
-            'allComments' => $allCommentsReported,
+            // 'allComments' => $allComments,
+            'allCommentsReported' => $allCommentsReported,
+            'totalPosts' => count($allPosts),
+            'totalComments' => count($allCommentsReported),
         ];
 
         if (User::isConnected() === false) {
@@ -47,6 +52,7 @@ class MainController extends CoreController
         $dataToViews = [
             'post' => $post,
             'comments' => $comments,
+            'totalComments' => \count($comments),
         ];
 
         if (User::isConnected() === false) {
