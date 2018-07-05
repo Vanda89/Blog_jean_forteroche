@@ -16,8 +16,13 @@ class CommentController extends CoreController
     {
         $user = User::getConnectedUser();
         $author = $user->getName();
-        CommentsModel::add($_POST['idPost'], $author, $_POST['commentContent']);
 
+        // Si le commentaire a bien un titre et un contenu, alors on l'envoi dans la bdd
+        if (!empty($_POST['idPost']) && !empty($_POST['commentContent'])) {
+            CommentsModel::add($_POST['idPost'], $author, $_POST['commentContent']);
+        }
+
+        // Redirection vers le post
         $this->redirect('/post/get?id='.$_POST['idPost']);
     }
 
@@ -28,6 +33,8 @@ class CommentController extends CoreController
     {
         CommentsModel::reported($_POST['idComment']);
         $response = ['reported' => $_POST['idComment']];
+
+        // Envoi du json avec le signalement du commentaire
         self::sendJson($response);
     }
 }

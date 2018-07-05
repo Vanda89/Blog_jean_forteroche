@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="<?= $tpl->basePath; ?>css/style.css">
+  <link rel="stylesheet" href="<?= $tpl->basePath; ?>/css/style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
   <title>
@@ -124,7 +124,7 @@
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
     crossorigin="anonymous"></script>
-  <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=hmscwtpg68ho7mn32oduih8w3n468kjklku6hu56wd8t69lz"></script>
+  <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=hmscwtpg68ho7mn32oduih8w3n468kjklku6hu56wd8t69lz"></script> 
   <script src="<?= $tpl->basePath; ?>/js/app.js"></script>
 </body>
 

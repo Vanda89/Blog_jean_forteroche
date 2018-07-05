@@ -145,7 +145,7 @@ class UserController extends CoreController
     }
 
     /**
-     * validateComment.
+     * validateCommentReported.
      */
     public function validateCommentReported()
     {
@@ -159,19 +159,22 @@ class UserController extends CoreController
     }
 
     /**
-     * deleteComment.
+     * rejectCommentReported.
      */
-    public function deleteReportedComment()
+    public function rejectCommentReported()
     {
-        // S'il existe un commentaire reporté, on le supprime
+        // S'il existe un commentaire reporté, on le valide
         if (isset($_POST['idComment'])) {
-            CommentsModel::delete($_POST['idComment']);
+            CommentsModel::reject($_POST['idComment']);
         }
 
         // Redirection vers la home
         $this->redirect('/');
     }
 
+    /**
+     * deleteComment.
+     */
     public function deleteComment()
     {
         // S'il existe un commentaire, on le supprime

@@ -19,11 +19,10 @@ var app = {
         'insertdatetime media table contextmenu paste code help wordcount '
       ],
       toolbar: [
-        'insert | undo redo | styleselect | italic | forecolor backcolor | quicklink h2 h3 blockquote | link image | bullist numlist outdent indent | removeformat | help'
+        'insert | undo redo | bold italic | fontselect fontsizeselect | forecolor backcolor | quicklink h2 h3 blockquote | link image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
       ],
-      content_css: [
-        ' //fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tinymce.com/css/codepen.min.css'
-      ],
+      font_formats: 'Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
+      fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
       mobile: {
         theme: 'mobile',
         theme_url: '/programmation/Développeur_web_formation/P4_Blog/public/tinymce/js/tinymce/themes/mobile/theme.js',
@@ -48,11 +47,10 @@ var app = {
         'insertdatetime media table contextmenu paste code help wordcount '
       ],
       toolbar: [
-        'insert | undo redo | styleselect | bold italic | forecolor backcolor | quicklink h2 h3 blockquote | link image | bullist numlist outdent indent | removeformat | help'
+        'insert | undo redo | bold italic | fontselect fontsizeselect | forecolor backcolor | quicklink h2 h3 blockquote | link image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
       ],
-      content_css: [
-        ' //fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tinymce.com/css/codepen.min.css'
-      ],
+      font_formats: 'Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
+      fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
       mobile: {
         theme: 'mobile',
         theme_url: '/programmation/Développeur_web_formation/P4_Blog/public/tinymce/js/tinymce/themes/mobile/theme.js',

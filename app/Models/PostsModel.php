@@ -15,6 +15,16 @@ class PostsModel
     private $creation_date;
     private $update_date;
     private $User_id_user;
+    private $numberCommentsPublished;
+    private $numberCommentsReported;
+    private $numberCommentsReportedDeleted;
+
+    public function __construct()
+    {
+        $this->numberCommentsPublished = $this->getNumberCommentsPublishedByPost();
+        $this->numberCommentsReported = $this->getNumberCommentsReportedByPost();
+        $this->numberCommentsReportedDeleted = $this->getNumberCommentsReportedDeletedByPost();
+    }
 
     /**
      * findAll.
@@ -25,6 +35,7 @@ class PostsModel
             SELECT id_post, title, post_content, status, creation_date, update_date
             FROM posts
             ORDER BY creation_date DESC
+            LIMIT 0, 10
         ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
@@ -83,26 +94,6 @@ class PostsModel
     }
 
     /**
-     * archieve.
-     */
-    // public static function archieve()
-    // {
-    //     $sql = '
-    //     UPDATE posts
-    //     SET status = 2
-    //     WHERE id_post = (:idPost)
-    //     ';
-
-    //     // On récupère la connextion PDO à la DB
-    //     $pdo = Database::dbConnect()($sql);
-    //     // On prépare une requête à l'exécution et retourne un objet
-    //     $pdoStatement = $pdo->prepare($sql);
-    //     // Association des valeurs aux champs de la bdd et paramètrage du retour
-    //     $pdoStatement->bindValue(':idPost', self::id_post, PDO::PARAM_INT);
-    //     $pdoStatement->execute();
-    // }
-
-    /**
      * update.
      */
     public static function update($idPost, $title, $content)
@@ -121,6 +112,77 @@ class PostsModel
         $pdoStatement->bindValue(':postContent', $content, PDO::PARAM_STR);
         $pdoStatement->bindValue(':idPost', $idPost, PDO::PARAM_INT);
         $pdoStatement->execute();
+    }
+
+    public function getNumberCommentsPublishedByPost()
+    {
+        $sql = '  
+            SELECT COUNT(*)
+            FROM comments AS c  
+            INNER JOIN posts AS p
+            ON c.Posts_id_post = p.id_post        
+            WHERE (c.status = 0 OR c.status = 1 OR c.status = 2) AND p.id_post = :id_post
+            ORDER BY c.comment_date DESC
+           
+            ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':id_post', $this->id_post, PDO::PARAM_INT);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchColumn();
+    }
+
+    /**
+     * getNumberCommentsReportedByPost.
+     */
+    public function getNumberCommentsReportedByPost()
+    {
+        $sql = '  
+            SELECT COUNT(*)
+            FROM comments AS c  
+            INNER JOIN posts AS p
+            ON c.Posts_id_post = p.id_post        
+            WHERE c.status = 1 AND p.id_post = :id_post
+            ORDER BY c.comment_date DESC
+           
+            ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':id_post', $this->id_post, PDO::PARAM_INT);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchColumn();
+    }
+
+    /**
+     * getNumberCommentsReportedDeletedByPost.
+     */
+    public function getNumberCommentsReportedDeletedByPost()
+    {
+        $sql = '
+            SELECT COUNT(*)
+            FROM comments AS c  
+            INNER JOIN posts AS p
+            ON c.Posts_id_post = p.id_post        
+            WHERE c.status = 3 AND p.id_post = :id_post
+            ORDER BY c.comment_date DESC
+            ';
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':id_post', $this->id_post, PDO::PARAM_INT);
+        $pdoStatement->execute();
+
+        return $pdoStatement->fetchColumn();
     }
 
     /**
@@ -233,5 +295,29 @@ class PostsModel
         $this->update_date = $update_date;
 
         return $this;
+    }
+
+    /**
+     * Get the number of Comments Reported.
+     */
+    public function getNumberCommentsPublished()
+    {
+        return $this->numberCommentsPublished;
+    }
+
+    /**
+     * Get the number of Comments Reported.
+     */
+    public function getNumberCommentsReported()
+    {
+        return $this->numberCommentsReported;
+    }
+
+    /**
+     * Get the number of Comments Deleted.
+     */
+    public function getNumberCommentsReportedDeleted()
+    {
+        return $this->numberCommentsReportedDeleted;
     }
 }

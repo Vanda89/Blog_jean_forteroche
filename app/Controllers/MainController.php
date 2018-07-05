@@ -25,7 +25,6 @@ class MainController extends CoreController
 
         $dataToViews = [
             'allPosts' => $allPosts,
-            // 'allComments' => $allComments,
             'allCommentsReported' => $allCommentsReported,
             'totalPosts' => count($allPosts),
             'totalComments' => count($allCommentsReported),

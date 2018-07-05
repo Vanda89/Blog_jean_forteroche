@@ -9,6 +9,10 @@ body {
   background-position: center;
 }
 
+main {
+  min-height: 31.25rem;
+}
+
 .post-row,
 .comment-row,
 .comments-container-form,
@@ -77,6 +81,11 @@ body {
   text-align: left;
   font-family: 'Ultra', serif;
   font-size: 1.5em;
+}
+
+.comment-post-title {
+  font-family: 'Ultra', serif;
+  font-size: 1.4em;
 }
 
 .post-date,
@@ -191,6 +200,7 @@ h5 {
 }
 
 /**************************BACK***************************/
+
 .posts-list-admin {
   color: #343A40;
 }
@@ -217,10 +227,15 @@ h5 {
 }
 
 .table thead th {
+  height: 50px;
   color: burlywood;
   background: #343A40;
   border-color: #343A40;
   vertical-align: middle;
+}
+
+.posts-list-admin tbody tr {
+  height: 55px;
 }
 
 .posts-list-admin td,

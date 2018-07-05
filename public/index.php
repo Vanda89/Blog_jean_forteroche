@@ -61,9 +61,9 @@ switch ($currentURL) {
   $controller->validateCommentReported();
     break;
 
-  case '/admin/reported/delete':
+  case '/admin/reject':
   $controller = new UserController();
-  $controller->deleteReportedComment();
+  $controller->rejectCommentReported();
     break;
 
   case '/admin/post/comment/delete':

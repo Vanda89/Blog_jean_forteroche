@@ -10,7 +10,7 @@ class CommentsModel
     private $id_comment;
     private $author;
     private $comment_content;
-    //status => 0 = valide et publié, 1 = reporté, 2 = archivé
+    //status => 0 = statut de base à la publication, 1 = reporté, 2 = reporté et validé, 3 = reporté et supprimé, 4 = archivé
     private $status;
     private $comment_date;
     private $update_date;
@@ -112,7 +112,27 @@ class CommentsModel
     {
         $sql = '
             UPDATE comments
-            SET status = 0
+            SET status = 2
+            WHERE id_comment = :idComment
+        ';
+
+        // On récupère la connextion PDO à la DB
+        $pdo = Database::dbConnect();
+        // On prépare une requête à l'exécution et retourne un objet
+        $pdoStatement = $pdo->prepare($sql);
+        // Association des valeurs aux champs de la bdd et paramètrage du retour
+        $pdoStatement->bindValue(':idComment', $idComment, PDO::PARAM_INT);
+        $pdoStatement->execute();
+    }
+
+    /**
+     * reject.
+     */
+    public static function reject($idComment)
+    {
+        $sql = '
+            UPDATE comments
+            SET status = 3
             WHERE id_comment = :idComment
         ';
 
@@ -132,7 +152,7 @@ class CommentsModel
     {
         $sql = '
             UPDATE comments
-            SET status = 2
+            SET status = 4
             WHERE id_comment = :idComment
         ';
 
@@ -157,7 +177,7 @@ class CommentsModel
             FROM comments AS c
             INNER JOIN posts AS p
             ON c.Posts_id_post = p.id_post         
-            WHERE c.Posts_id_post = :idPost AND c.status < 2
+            WHERE c.Posts_id_post = :idPost AND c.status <= 2
             ORDER BY c.comment_date DESC
         ';
         // On récupère la connextion PDO à la DB
