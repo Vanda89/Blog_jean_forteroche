@@ -71,7 +71,7 @@ class CommentsModel
     {
         $sql = '
             INSERT INTO comments (Posts_id_post, author, comment_content, status, comment_date)
-            VALUES (:idPost, :author, :commentContent, 1, NOW())
+            VALUES (:idPost, :author, :commentContent, 0, NOW())
         ';
 
         // On récupère la connextion PDO à la DB
@@ -269,7 +269,7 @@ class CommentsModel
      */
     public function getCommentDate(): string
     {
-        return $this->comment_date;
+        return date('d-m-Y H:i:s', strtotime($this->comment_date));
     }
 
     /**
@@ -309,7 +309,7 @@ class CommentsModel
      */
     public function getUpdateDate(): string
     {
-        return $this->update_date;
+        return date('d-m-Y H:i:s', strtotime($this->update_date));
     }
 
     /**

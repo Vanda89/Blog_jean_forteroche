@@ -24,7 +24,7 @@ class PostsModel
         $sql = '
             SELECT id_post, title, post_content, status, creation_date, update_date
             FROM posts
-            ORDER BY creation_date
+            ORDER BY creation_date DESC
         ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
@@ -46,11 +46,11 @@ class PostsModel
      */
     public static function find($idPost)
     {
-        $sql = "
-            SELECT id_post, title, post_content, status, DATE_FORMAT(creation_date, '%d/%m/%Y') AS creation_date, update_date
+        $sql = '
+            SELECT id_post, title, post_content, status, creation_date, update_date
             FROM posts
             WHERE id_post = (:idPost)
-        ";
+        ';
         // On récupère la connextion PDO à la DB
         $pdo = Database::dbConnect();
         // On prépare une requête à l'exécution et retourne un objet
@@ -196,7 +196,7 @@ class PostsModel
      */
     public function getCreationDate()
     {
-        return $this->creation_date;
+        return date('d-m-Y H:i:s', strtotime($this->creation_date));
     }
 
     /**
@@ -217,7 +217,7 @@ class PostsModel
     public function getUpdateDate()
     {
         if (isset($this->update_date)) {
-            return $this->update_date;
+            return date('d-m-Y H:i:s', strtotime($this->update_date));
         } else {
             return '-';
         }

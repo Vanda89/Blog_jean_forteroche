@@ -2,7 +2,6 @@
   <section class="posts-list container d-flex flex-column">
     <header class="posts-list-header row d-flex justify-content-between mb-5 p-3">
       <h2 class="book-title w-100 text-center">Billet simple pour l'Alaska</h2>
-      <p class="text-right w-100">Retrouvez chaque semaine un nouvel épisode de mon nouveau roman</p>
     </header>
 
     <?php foreach ($tpl->viewVars['allPosts'] as $key => $value) :?>
