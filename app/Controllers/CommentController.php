@@ -5,8 +5,6 @@ namespace P4blog\Controllers;
 use P4blog\Models\CommentsModel;
 use P4blog\Utils\User;
 
-// use P4blog\Models\CommentsModel;
-
 class CommentController extends CoreController
 {
     /**

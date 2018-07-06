@@ -28,16 +28,18 @@
             <article class="comment-content row m-0 pb-4 px-4">
              <?= $value->getCommentContent(); ?>
             </article>
+            <?php if ($value->getStatus() === 0):?>
             <form action="" method="post" class="row report-form ml-4 mb-4">
               <input type="hidden" name="idComment" value="<?= $value->getIdComment(); ?>">
               <button type="submit" class="report btn btn-warning btn-sm" name="report">Signaler</button>
             </form>
+            <?php endif; ?>
           </div>
           <?php endforeach; ?>
         </div>
         <?php endif; ?>
 
-        <?php if ($tpl->viewVars['totalComments'] > 10):?>
+        <?php if ($tpl->viewVars['totalComments'] >= 5):?>
         <div class="row d-flex justify-content-center">
           <nav class="posts-list-pagination" aria-label="Page navigation example">
             <ul class="pagination">

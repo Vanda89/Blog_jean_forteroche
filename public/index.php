@@ -27,7 +27,7 @@ switch ($currentURL) {
     break;
 
   //routes dynamiques avec get
-  case '/post/get':
+  case '/post':/******************************************************* */
   if (isset($_GET['id'])) {
       $controller = new MainController();
       $controller->showPost($_GET['id']);
@@ -71,9 +71,7 @@ switch ($currentURL) {
   $controller->deleteComment();
     break;
 
-/* FAIRE LIENS BOUTON EDITER PAGE POSTADMIN ET BOUTONS SIGNALER SUR POSTADMIN ET POSTUSER*/
-
-  case '/admin/post/create':
+  case '/create-post':/************************ ****************************/
   $controller = new UserController();
   $controller->createPost();
     break;
@@ -84,18 +82,13 @@ switch ($currentURL) {
     break;
 
   //routes dynamiques avec get
-  case '/admin/post/edit':
+  case '/edit-post':/*************************************************** */
   if (isset($_GET['id'])) {
       $controller = new UserController();
       $controller->editPost($_GET['id']);
   } else {
       echo 'Erreur 404';
   }
-    break;
-
-  case '/admin/post/edit/archieve':
-  $controller = new UserController();
-  $controller->archievePost();
     break;
 
   case '/admin/post/edit/update':

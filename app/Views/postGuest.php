@@ -34,7 +34,7 @@
         </div>
         <?php endif; ?>
         
-        <?php if ($tpl->viewVars['totalComments'] > 10):?>
+        <?php if ($tpl->viewVars['totalComments'] >= 5):?>
         <div class="post-pagination row d-flex justify-content-center">
           <nav class="posts-list-pagination" aria-label="Page navigation example">
             <ul class="pagination">

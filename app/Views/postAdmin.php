@@ -20,7 +20,7 @@
 
 
         <!-- PROBLEME AVEC LA METHODE D ENVOI DU FORMULAIRE  -->
-        <form action="<?= $tpl->basePath; ?>/admin/post/edit" method="get" class="row d-flex justify-content-end mr-4 mb-4">
+        <form action="<?= $tpl->basePath; ?>/edit-post" method="get" class="row d-flex justify-content-end mr-4 mb-4">
           <input type="hidden" name="id" value="<?= $tpl->viewVars['post']->getId_post(); ?>">
           <button type="submit" class="edition btn btn-info btn-md px-4 font-weight-bold">Editer</button>
         </form>

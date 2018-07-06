@@ -10,20 +10,20 @@ class PostsModel
     private $id_post;
     private $title;
     private $post_content;
-    // status => 0 = sauvegardé mais pas publié, 1 = publié, 2 = archivé
+    // status => 0 = sauvegardé mais pas publié, 1 = publié
     private $status;
     private $creation_date;
     private $update_date;
     private $User_id_user;
     private $numberCommentsPublished;
     private $numberCommentsReported;
-    private $numberCommentsReportedDeleted;
+    private $numberCommentsDeleted;
 
     public function __construct()
     {
         $this->numberCommentsPublished = $this->getNumberCommentsPublishedByPost();
         $this->numberCommentsReported = $this->getNumberCommentsReportedByPost();
-        $this->numberCommentsReportedDeleted = $this->getNumberCommentsReportedDeletedByPost();
+        $this->numberCommentsDeleted = $this->getNumberCommentsDeletedByPost();
     }
 
     /**
@@ -164,14 +164,14 @@ class PostsModel
     /**
      * getNumberCommentsReportedDeletedByPost.
      */
-    public function getNumberCommentsReportedDeletedByPost()
+    public function getNumberCommentsDeletedByPost()
     {
         $sql = '
             SELECT COUNT(*)
             FROM comments AS c  
             INNER JOIN posts AS p
             ON c.Posts_id_post = p.id_post        
-            WHERE c.status = 3 AND p.id_post = :id_post
+            WHERE (c.status = 3 OR c.status = 4) AND p.id_post = :id_post
             ORDER BY c.comment_date DESC
             ';
         // On récupère la connextion PDO à la DB
@@ -316,8 +316,8 @@ class PostsModel
     /**
      * Get the number of Comments Deleted.
      */
-    public function getNumberCommentsReportedDeleted()
+    public function getNumberCommentsDeleted()
     {
-        return $this->numberCommentsReportedDeleted;
+        return $this->numberCommentsDeleted;
     }
 }

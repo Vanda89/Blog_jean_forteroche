@@ -6,11 +6,6 @@ use P4blog\Models\PostsModel;
 use P4blog\Models\CommentsModel;
 use P4blog\Utils\User;
 
-// require_once __DIR__.'/./CoreController.php';
-// require_once __DIR__.'/../Models/PostsModel.php';
-// require_once __DIR__.'/../Models/CommentsModel.php';
-// require __DIR__.'/../Utils/User.php';
-
 class MainController extends CoreController
 {
     /**
@@ -62,4 +57,10 @@ class MainController extends CoreController
             $this->show('postUser', 'Billet - Blog de Jean Forteroche', $dataToViews);
         }
     }
+
+    // public function truncatePost($content, $nbchar)
+    // {
+    //     return strlen($content) > $nbchar ? substr(substr($content, 0, $nbchar),0,
+    // strrpos(substr($content, 0, $nbchar), ' ')).' (...)' : $content;
+    // }
 }

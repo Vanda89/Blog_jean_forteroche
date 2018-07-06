@@ -22,7 +22,7 @@
               <?php foreach ($tpl->viewVars['allPosts'] as $key => $value) :?>
               <tr>
                 <th scope="row">
-                  <a href="<?= $tpl->basePath; ?>/post/get?id= <?= $value->getId_post(); ?>" class="post-title-cell">
+                  <a href="<?= $tpl->basePath; ?>/post?id= <?= $value->getId_post(); ?>" class="post-title-cell">
                     <?= $value->getTitle(); ?>
                   </a>
                 </th>
@@ -39,7 +39,7 @@
                   <?= $value->getNumberCommentsReported(); ?>
                 </td>
                 <td class="report-comment text-primary">
-                  <?= $value->getNumberCommentsReportedDeleted(); ?>
+                  <?= $value->getNumberCommentsDeleted(); ?>
                 </td>
               </tr>
               <?php endforeach; ?>

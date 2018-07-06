@@ -12,10 +12,10 @@
           <p class="post-date align-self-end"><?= $value->getCreationDate(); ?></p>
         </div>
         <article class="post-content row m-0 pb-5 px-5">
-          <?= $value->getPostContent(); ?>
+          <?= substr($value->getPostContent(), 0, 1200).'...'; ?>
         </article>
         <div class="row d-flex justify-content-between pr-4">
-          <a href="<?= $tpl->basePath; ?>/post/get?id= <?= $value->getId_post(); ?>" class="read-more row pb-3 pl-5">Lire la suite...</a>
+          <a href="<?= $tpl->basePath; ?>/post?id= <?= $value->getId_post(); ?>" class="read-more row pb-3 pl-5">Lire la suite...</a>
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@
             <?php endif; ?>
             <?php if ($tpl->isConnected === true && $tpl->isAdmin === true) : ?>
             <li>
-              <a href="<?= $tpl->basePath; ?>/admin/post/create" class="creation btn btn-light mr-3">
+              <a href="<?= $tpl->basePath; ?>/create-post" class="creation btn btn-light mr-3">
                 <i class="fas fa-pencil-alt"></i> Création
               </a>
             </li>
