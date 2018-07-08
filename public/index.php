@@ -27,12 +27,13 @@ switch ($currentURL) {
     break;
 
   //routes dynamiques avec get
-  case '/post':/******************************************************* */
+  case '/post':
   if (isset($_GET['id'])) {
       $controller = new MainController();
       $controller->showPost($_GET['id']);
   } else {
-      echo 'Erreur 404';
+      $controller = new MainController();
+      $controller->show404();
   }
     break;
 
@@ -71,7 +72,7 @@ switch ($currentURL) {
   $controller->deleteComment();
     break;
 
-  case '/create-post':/************************ ****************************/
+  case '/create-post':
   $controller = new UserController();
   $controller->createPost();
     break;
@@ -82,7 +83,7 @@ switch ($currentURL) {
     break;
 
   //routes dynamiques avec get
-  case '/edit-post':/*************************************************** */
+  case '/edit-post':
   if (isset($_GET['id'])) {
       $controller = new UserController();
       $controller->editPost($_GET['id']);

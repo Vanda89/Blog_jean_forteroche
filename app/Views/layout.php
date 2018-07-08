@@ -19,7 +19,9 @@
 <body>
   <div class="container-fluid d-flex flex-column justify-content-between">
     <header class="blog-header row navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-around align-items-center mb-5">
-      <h1 class="navbar-brand mb-0 pb-0"><a href="<?= $tpl->basePath; ?>/" class="blog-author">Jean Forteroche</a></h1>
+      <h1 class="navbar-brand mb-0 pb-0">
+        <a href="<?= $tpl->basePath; ?>/" class="blog-author">Jean Forteroche</a>
+      </h1>
       <nav class="blog-header-nav d-flex justify-content-between align-items-center">
         <nav class="blog-nav">
           <ul class="nav navbar-nav d-flex justify-content-between align-items-center">
@@ -57,39 +59,54 @@
           </ul>
         </nav>
     </header>
+
+    <!-- Large modal -->
+    <div class="modal fade" id="alertBox" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="alertBox-text"></h5>
+            <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <?php 
       if (isset($tpl->ContentBody)) {
           include $tpl->ContentBody;
       }
     ?>
+
     <footer class="page-footer row d-flex flex-column bg-dark text-light pt-4 mt-4">
       <div class="container text-center text-md-left">
         <div class="row d-flex justify-content-between">
           <div class="book-summary col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
-            <h5 class="font-weight-bold text-uppercase mb-4">Book summary</h5>
-            <p>Here you can use rows and columns here to organize your book summary.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit amet numquam iure provident voluptate esse quasi,
-              veritatis totam voluptas nostrum.</p>
+            <h5 class="font-weight-bold text-uppercase mb-4">Résumé du livre</h5>
+            <p>Vous pouvez écrire aux lecteurs un bref résumé de votre nouveau roman.</p>
+            <p>Afin qu'ils aient une idée du contexte de l'histoire et veuillent en lire plus.</p>
           </div>
           <hr class="clearfix w-100 d-md-none">
           <div class="contact-infos col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
-            <h5 class="font-weight-bold text-uppercase mb-4">Contact Information</h5>
+            <h5 class="font-weight-bold text-uppercase mb-4">Jean Forteroche</h5>
             <ul class="list-unstyled">
               <li>
                 <p>
-                  <i class="fa fa-home mr-3"></i> New York, NY 10012, US</p>
+                  <i class="fa fa-home mr-3"></i> Adresse</p>
               </li>
               <li>
                 <p>
-                  <i class="fa fa-envelope mr-3"></i> info@example.com</p>
+                  <i class="fa fa-envelope mr-3"></i> jeanforteroche@alaska.com</p>
               </li>
               <li>
                 <p>
-                  <i class="fa fa-phone mr-3"></i> + 01 234 567 88</p>
+                  <i class="fa fa-phone mr-3"></i> N° de téléphone</p>
               </li>
               <li>
                 <p>
-                  <i class="fa fa-print mr-3"></i> + 01 234 567 89</p>
+                  <i class="fa fa-print mr-3"></i> N° de fax</p>
               </li>
             </ul>
           </div>
@@ -124,7 +141,7 @@
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
     crossorigin="anonymous"></script>
-  <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=hmscwtpg68ho7mn32oduih8w3n468kjklku6hu56wd8t69lz"></script> 
+  <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=hmscwtpg68ho7mn32oduih8w3n468kjklku6hu56wd8t69lz"></script>
   <script src="<?= $tpl->basePath; ?>/js/app.js"></script>
 </body>
 

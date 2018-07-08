@@ -58,9 +58,13 @@ class MainController extends CoreController
         }
     }
 
-    // public function truncatePost($content, $nbchar)
-    // {
-    //     return strlen($content) > $nbchar ? substr(substr($content, 0, $nbchar),0,
-    // strrpos(substr($content, 0, $nbchar), ' ')).' (...)' : $content;
-    // }
+    public function show404()
+    {
+        $this->show('404', 'Erreur 404');
+    }
+
+    public function show403()
+    {
+        $this->show('403', 'Erreur 403');
+    }
 }

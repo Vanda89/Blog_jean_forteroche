@@ -68,7 +68,7 @@ var app = {
     }, app.submitForm);
 
     $('.report-form').on('submit', {
-      url: "./comment/report"
+      url: "./post/comment/report"
     }, app.submitForm);
 
   },
@@ -95,17 +95,18 @@ var app = {
           errors += element + '<br>';
         })
         $('#errors').html(errors);
-      }
+      }   
 
+      // Si le retour json comprend la réponse reported, affichage d'un message de confirmation
       if (response['reported'] != undefined) {
         // TODO afficher un message dans une balise
-        alert('Vous avez bien signalé le commentaire')
-        
-
+        // alert('Vous avez bien signalé le commentaire')
+        $('#alertBox').modal('show');
+        $('#alertBox-text').text('Le commentaire a bien été signalé !');
       }
-
     }).fail(function () {
-      alert('ajax failed');
+      $('#alertBox').modal('show');
+      $('#alertBox-text').text('Une erreur est survenue !');
     });
   },
 }
